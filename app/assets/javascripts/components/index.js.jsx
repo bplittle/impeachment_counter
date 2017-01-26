@@ -67,11 +67,39 @@ class Index extends React.Component {
   render() {
     return (
       <div className="container">
-        <div>years: {this.state.years} </div>
-        <div>days: {this.state.days} </div>
-        <div>hours: {this.state.hours} </div>
-        <div>minutes: {this.state.minutes} </div>
-        <div>seconds: {this.state.seconds} </div>
+        <div id="header">
+          <h2>Impeachment Counter</h2>
+          <h3>How Long Will He Last?</h3>
+        </div>
+        <div id="trump-countdown">
+          <h1> {this.state.years}</h1>
+          <h1>:</h1>
+          <h1> {this.state.days}</h1>
+          <h1>:</h1>
+          <h1> {this.state.hours}</h1>
+          <h1>:</h1>
+          <h1> {this.state.minutes}</h1>
+          <h1>:</h1>
+          <h1> {this.state.seconds} </h1>
+        </div>
+        <div id="vote-box">
+          <div className="col-xs-12"><h3>Place Your Vote</h3></div>
+          <div className="col-sm-6 col-xs-12">
+            <label>Date</label>
+            <input name="date" type="date" className="form-control"/>
+          </div>
+          <div className="col-sm-6 col-xs-12">
+            <label>Time</label>
+            <input name="time" type="time" className="form-control"/>
+          </div>
+          <div className="col-sm-6 col-xs-12">
+            <label>Name</label>
+            <input name="time" type="text" className="form-control"/>
+          </div><div className="col-sm-6 col-xs-12">
+            <label>Email</label>
+            <input name="email" type="email" className="form-control"/>
+          </div>
+        </div>
       </div>
     );
   }
