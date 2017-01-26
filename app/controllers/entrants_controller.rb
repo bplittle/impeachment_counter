@@ -24,17 +24,24 @@ class EntrantsController < ApplicationController
   # POST /entrants
   # POST /entrants.json
   def create
-    @entrant = Entrant.new(entrant_params)
+    mod_params = entrant_params
+    date = entrant_params[:date].to_datetime
+    date = date.change(hour: params[:time].split(':')[0].to_i, minute: params[:time].split(':')[1].to_i)
+    mod_params[:guess] = date
+    mod_params.delete('date')
+    mod_params.delete('time')
+    @entrant = Entrant.create(mod_params)
 
-    respond_to do |format|
-      if @entrant.save
-        format.html { redirect_to @entrant, notice: 'Entrant was successfully created.' }
-        format.json { render :show, status: :created, location: @entrant }
-      else
-        format.html { render :new }
-        format.json { render json: @entrant.errors, status: :unprocessable_entity }
-      end
-    end
+    # respond_to do |format|
+    #   if @entrant.save
+    #     format.html { redirect_to @entrant, notice: 'Entrant was successfully created.' }
+    #     format.json { render :show, status: :created, location: @entrant }
+    #   else
+    #     format.html { render :new }
+    #     format.json { render json: @entrant.errors, status: :unprocessable_entity }
+    #   end
+    # end
+    render json: {entrant: @entrant}, status: 200
   end
 
   # PATCH/PUT /entrants/1
@@ -69,6 +76,6 @@ class EntrantsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def entrant_params
-      params.fetch(:entrant, {})
+      params.permit(:date, :name, :time, :email)
     end
 end
