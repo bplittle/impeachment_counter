@@ -40,37 +40,50 @@ class Index extends React.Component {
 
   }
 
+  addZeroes(lengthDiff, string) {
+    for(let i = 0; i < lengthDiff; i++) {
+      string = '0' + string;
+    }
+    return string;
+  }
+
   setYears() {
     let yearInMs = 31556952000;
-    let years = Math.floor(this.state.remainder / yearInMs);
+    let years = String(Math.floor(this.state.remainder / yearInMs));
     let remainder = this.state.remainder % yearInMs;
     this.setState({years: years, remainder: remainder}, this.setDays);
   }
 
   setDays() {
     let dayInMs = 86400000;
-    let days = Math.floor(this.state.remainder / dayInMs);
+    let days = String(Math.floor(this.state.remainder / dayInMs));
     let remainder = this.state.remainder % dayInMs;
     this.setState({days: days, remainder: remainder}, this.setHours);
   }
 
   setHours() {
     let hourInMs = 3600000;
-    let hours = Math.floor(this.state.remainder / hourInMs);
+    let hours = String(Math.floor(this.state.remainder / hourInMs));
+    let lengthDiff = 2 - hours.length;
+    hours = this.addZeroes(lengthDiff, hours);
     let remainder = this.state.remainder % hourInMs;
     this.setState({hours: hours, remainder: remainder}, this.setMinutes);
   }
 
   setMinutes() {
     let minutesInMs = 60000;
-    let minutes = Math.floor(this.state.remainder / minutesInMs);
+    let minutes = String(Math.floor(this.state.remainder / minutesInMs));
+    let lengthDiff = 2 - minutes.length;
+    minutes = this.addZeroes(lengthDiff, minutes);
     let remainder = this.state.remainder % minutesInMs;
     this.setState({minutes: minutes, remainder: remainder}, this.setSeconds);
   }
 
   setSeconds() {
     let secondsInMs = 1000;
-    let seconds = Math.floor(this.state.remainder / secondsInMs);
+    let seconds = String(Math.floor(this.state.remainder / secondsInMs));
+    let lengthDiff = 2 - seconds.length;
+    seconds = this.addZeroes(lengthDiff, seconds);
     let remainder = this.state.remainder % secondsInMs;
     this.setState({seconds: seconds, remainder: remainder});
   }
@@ -111,8 +124,12 @@ class Index extends React.Component {
   }
 
   message(type) {
-    console.log(type);
     alert(type);
+    let that = this;
+    that.set({message: type});
+    setTimeout(function() {
+      that.set({message: null});
+    }, 5000)
   }
 
   handleChange(e) {
