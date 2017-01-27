@@ -2,7 +2,15 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+body {
+  background-color: #1a1a2a;
+  -webkit-background-image: radial-gradient(circle, transparent 0%, #0a0b13 100%), url(http://d2xgoeeq7a4bfy.cloudfront.net/v1/noise-160.png);
+  background-image: radial-gradient(circle, transparent 0%, #0a0b13 75%), url(http://d2xgoeeq7a4bfy.cloudfront.net/v1/noise-160.png);
+}
+
 .container {
+  // font-family: Ultra;
+  font-family: Bevan;
   width: 100%;
   height: 100vh;
 
@@ -15,6 +23,7 @@
     h1, .tie {
       display: inline-block;
       margin: 10px;
+      font-family: "Arial Black", "Arial Bold", Gadget, sans-serif;
     }
     .tie {
       height: 75px;
@@ -47,10 +56,24 @@
       z-index: -99;
       width: 150%;
     }
+    label {
+      color: white;
+      font-family: Tahoma, Verdana, Segoe, sans-serif;
+
+    }
+    .form-control {
+      font-family: Tahoma, Verdana, Segoe, sans-serif;
+      background-color: rgba(0, 0, 0, .25);
+      border-color: #46aeff;
+      color: #ff4646;
+    }
   }
 
   // h1, h2, h3, h4, p {line-height: 1}
   h1 {font-size: 100px;}
   h2 {font-size: 60px;}
   h3 {font-size: 40px;}
+  .red {color: #ff4646;}
+  .blue {color: #46aeff;}
+  .white {color: white;}
 }

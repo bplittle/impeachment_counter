@@ -150,23 +150,23 @@ class Index extends React.Component {
     return (
       <div className="container">
         <div id="header">
-          <h2>Impeachment Counter</h2>
-          <h3>How Long Will He Last?</h3>
+          <h2><span className="red">IMPEACHMENT</span> <span className="blue">COUNTER</span></h2>
+          <h3 className="white">How Long Will He Last?</h3>
         </div>
         <div id="trump-countdown">
-          <h1> {this.state.years}</h1>
+          <h1 className="red"> {this.state.years}</h1>
           <img src={this.props.tie_url} className="tie" id="first-tie"/>
-          <h1> {this.state.days}</h1>
+          <h1 className="blue"> {this.state.days}</h1>
           <img src={this.props.tie_url} className="tie" />
-          <h1> {this.state.hours}</h1>
+          <h1 className="white"> {this.state.hours}</h1>
           <img src={this.props.tie_url} className="tie" />
-          <h1> {this.state.minutes}</h1>
+          <h1 className="blue"> {this.state.minutes}</h1>
           <img src={this.props.tie_url} className="tie" />
-          <h1> {this.state.seconds} </h1>
+          <h1 className="red"> {this.state.seconds} </h1>
         </div>
         <div id="vote-box" className="row">
           <form action="/" onSubmit={this.formSubmit}>
-            <div className="col-xs-12"><h3>Place Your Vote</h3></div>
+            <div className="col-xs-12"><h3 className="white">Place Your Vote</h3></div>
             <div className="col-sm-6 col-xs-12">
               <label>Date</label>
               <input name="date" type="date" className="form-control" required value={this.state.date} onChange={this.handleChange}/>
