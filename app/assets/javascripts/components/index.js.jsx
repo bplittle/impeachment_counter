@@ -19,12 +19,14 @@ class Index extends React.Component {
       seconds: 0,
       remainder: 0,
       date: formattedDate,
+      randomInt: null,
     };
     // binding this
     this.handleChange = this.handleChange.bind(this);
     this.formSubmit = this.formSubmit.bind(this);
     this.clearValues = this.clearValues.bind(this);
     this.message = this.message.bind(this);
+    this.randomFunc = this.randomFunc.bind(this);
   }
 
   componentDidMount() {
@@ -89,6 +91,20 @@ class Index extends React.Component {
     this.setState({seconds: seconds, remainder: remainder});
   }
 
+  randomFunc() {
+    let that = this;
+    let int = Math.floor(Math.random() * 10);
+    console.log(int);
+    this.setState({randomInt: int});
+    setTimeout(function() {
+      if(that.state.int === int) {
+        that.setState({randomInt: null});
+      }
+    }, 10000);
+  }
+
+
+
 
   formSubmit(e) {
     e.preventDefault();
@@ -108,6 +124,7 @@ class Index extends React.Component {
         console.log(r);
         that.clearValues();
         that.message('success');
+        that.randomFunc();
       }, error: r => {
         console.log(r);
         that.message('error');
@@ -147,6 +164,9 @@ class Index extends React.Component {
     } else if(this.state.message === 'error') {
       message = <div className="submit-message fail">There was a problem processing your entry</div>;
     }
+
+    let faceState = this.state.randomInt !== null;
+    let faceClass=`${faceState} ${this.state.randomInt}`;
     return (
       <div className="container">
         <div id="header">
@@ -190,6 +210,8 @@ class Index extends React.Component {
           {message}
           <img src={this.props.hair_url} id="hair"/>
         </div>
+        <div id="trump-face" className={faceClass}></div>
+        <button onClick={this.randomFunc} className="btn btn-primary">Trump Face {this.state.randomInt}</button>
       </div>
     );
   }
