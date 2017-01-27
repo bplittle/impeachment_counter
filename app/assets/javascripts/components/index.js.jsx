@@ -97,10 +97,10 @@ class Index extends React.Component {
     console.log(int);
     this.setState({randomInt: int});
     setTimeout(function() {
-      if(that.state.int === int) {
+      // if(that.state.int === int) {
         that.setState({randomInt: null});
-      }
-    }, 10000);
+      // }
+    }, 3000);
   }
 
 
