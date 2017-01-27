@@ -2,7 +2,6 @@ class Index extends React.Component {
 
   constructor(props) {
     super(props);
-    console.log(props);
     let inaugDate = new Date('January 20, 2017');
     let date = new Date();
     let month = String(date.getMonth() + 1).length > 1 ? ((date.getMonth() + 1) % 12) : `0${((date.getMonth() + 1) % 12)}`;
