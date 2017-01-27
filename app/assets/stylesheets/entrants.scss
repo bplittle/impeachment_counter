@@ -12,19 +12,42 @@
   #trump-countdown {
     text-align: center;
     margin: 50px auto;
-    h1 {
+    h1, .tie {
       display: inline-block;
       margin: 10px;
     }
+    .tie {
+      height: 75px;
+      margin-top: -50px;
+    }
+    #first-tie {margin-top: -45px;}
   }
 
   #vote-box {
     text-align: center;
+    position: relative;
+    max-width: 700px;
+    margin: auto;
+
     .col-sm-6 {text-align: left;}
     #enter-button {margin: 10px}
+
+    .fail {color: red;}
+    .success {color: green;}
+    .submit-message {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+    }
+
+    #hair {
+      position: absolute;
+      top: -200%;
+      left: -25%;
+      z-index: -99;
+      width: 150%;
+    }
   }
-
-
 
   // h1, h2, h3, h4, p {line-height: 1}
   h1 {font-size: 100px;}

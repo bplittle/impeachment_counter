@@ -2,6 +2,7 @@ class Index extends React.Component {
 
   constructor(props) {
     super(props);
+    console.log(props);
     let inaugDate = new Date('January 20, 2017');
     let date = new Date();
     let month = String(date.getMonth() + 1).length > 1 ? ((date.getMonth() + 1) % 12) : `0${((date.getMonth() + 1) % 12)}`;
@@ -124,11 +125,12 @@ class Index extends React.Component {
   }
 
   message(type) {
-    alert(type);
     let that = this;
-    that.set({message: type});
+    that.setState({message: type});
     setTimeout(function() {
-      that.set({message: null});
+      if(that.state.message === type) {
+        that.setState({message: null});
+      }
     }, 5000)
   }
 
@@ -139,6 +141,12 @@ class Index extends React.Component {
   }
 
   render() {
+    let message;
+    if(this.state.message === 'success') {
+      message = <div className="submit-message success">Guess received</div>;
+    } else if(this.state.message === 'error') {
+      message = <div className="submit-message fail">There was a problem processing your entry</div>;
+    }
     return (
       <div className="container">
         <div id="header">
@@ -147,16 +155,16 @@ class Index extends React.Component {
         </div>
         <div id="trump-countdown">
           <h1> {this.state.years}</h1>
-          <h1>:</h1>
+          <img src={this.props.tie_url} className="tie" id="first-tie"/>
           <h1> {this.state.days}</h1>
-          <h1>:</h1>
+          <img src={this.props.tie_url} className="tie" />
           <h1> {this.state.hours}</h1>
-          <h1>:</h1>
+          <img src={this.props.tie_url} className="tie" />
           <h1> {this.state.minutes}</h1>
-          <h1>:</h1>
+          <img src={this.props.tie_url} className="tie" />
           <h1> {this.state.seconds} </h1>
         </div>
-        <div id="vote-box">
+        <div id="vote-box" className="row">
           <form action="/" onSubmit={this.formSubmit}>
             <div className="col-xs-12"><h3>Place Your Vote</h3></div>
             <div className="col-sm-6 col-xs-12">
@@ -179,7 +187,8 @@ class Index extends React.Component {
               <input className="btn btn-primary" id="enter-button" value="Enter Now" type="submit"/>
             </div>
           </form>
-
+          {message}
+          <img src={this.props.hair_url} id="hair"/>
         </div>
       </div>
     );
