@@ -40,8 +40,15 @@ body {
 
     .col-sm-6 {text-align: left;}
     #enter-button {margin: 10px}
+    #message {
+      height: 40px;
+      font-family: Tahoma, Verdana, Segoe, sans-serif;
+      
+    }
 
-    .fail {color: red;}
+    .fail {
+      color: red;
+    }
     .success {color: green;}
     .submit-message {
       position: absolute;
@@ -79,15 +86,71 @@ body {
 }
 
 #trump-face {
-  height: 100px;
-  width: 75px;
-  background-color: black;
+  height: 250px;
+  width: 225px;
+  // background-color: black;
+  background-image: url('face2.png');
+  background-size: contain;
+  background-repeat: no-repeat;
   position: fixed;
-  bottom: -120px;
-  left: 50%;
-  transform: translateX(-50%);
-  transition: all 0.5s ease;
-  &.true {
-    bottom: 100px;
+
+  &.active {
+    transition: all 0.25s ease;
+  }
+
+  &.type-0 {
+    // transition: all 0.25s ease;
+    bottom: -400px;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%);
+    &.active {
+      bottom: 50px;
+    }
+  }
+
+  &.type-1 {
+    // transition: all 0.25s ease;
+    top: 50%;
+    right: -400px;
+    -webkit-transform: rotate(270deg);
+    -moz-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    transform: rotate(270deg);
+    &.active {
+      right: 50px;
+    }
+  }
+
+  &.type-2 {
+    top: -400px;
+    left: 50%;
+    // transition: all 0.25s ease;
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);
+    &.active {
+      top: 50px;
+    }
+  }
+
+  &.type-3 {
+    top: 50%;
+    // transition: all 0.25s ease;
+    left: -400px;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    transform: rotate(90deg);
+    &.active {
+      left: 50px;
+    }
   }
 }

@@ -8,6 +8,7 @@ class Index extends React.Component {
     let month = String(date.getMonth() + 1).length > 1 ? ((date.getMonth() + 1) % 12) : `0${((date.getMonth() + 1) % 12)}`;
     let day = String(date.getDate()).length > 1 ? date.getDate() : `0${date.getDate()}`;
     let formattedDate = `${date.getFullYear()}-${month}-${day}`;
+    let int = Math.floor(Math.random() * 4);
 
     this.state = {
       inaugDate: inaugDate,
@@ -19,7 +20,7 @@ class Index extends React.Component {
       seconds: 0,
       remainder: 0,
       date: formattedDate,
-      randomInt: null,
+      randomInt: int,
     };
     // binding this
     this.handleChange = this.handleChange.bind(this);
@@ -93,14 +94,23 @@ class Index extends React.Component {
 
   randomFunc() {
     let that = this;
-    let int = Math.floor(Math.random() * 10);
+    let int = Math.floor(Math.random() * 4);
     console.log(int);
-    this.setState({randomInt: int});
+    let audioUrl = that.props.audio_urls[Math.floor(Math.random()*that.props.audio_urls.length)]
+    let audio = new Audio(audioUrl);
     setTimeout(function() {
-      // if(that.state.int === int) {
-        that.setState({randomInt: null});
-      // }
+        that.setState({activeFace: true});
+    }, 100);
+    setTimeout(function() {
+      audio.play();
+    }, 300);
+    setTimeout(function() {
+        that.setState({activeFace: false});
+    }, 2250);
+    setTimeout(function() {
+        that.setState({randomInt: int});
     }, 3000);
+
   }
 
 
@@ -125,9 +135,11 @@ class Index extends React.Component {
         that.clearValues();
         that.message('success');
         that.randomFunc();
+        that.setState({entered: true});
       }, error: r => {
         console.log(r);
-        that.message('error');
+        let errorMessage = JSON.parse(r.responseText).message;
+        that.message('error', errorMessage);
       }
     })
   }
@@ -141,9 +153,9 @@ class Index extends React.Component {
     })
   }
 
-  message(type) {
+  message(type, text='There was a problem processing your entry') {
     let that = this;
-    that.setState({message: type});
+    that.setState({message: type, messageText: text});
     setTimeout(function() {
       if(that.state.message === type) {
         that.setState({message: null});
@@ -160,13 +172,17 @@ class Index extends React.Component {
   render() {
     let message;
     if(this.state.message === 'success') {
-      message = <div className="submit-message success">Guess received</div>;
+      message = <div className="submit-message blue">Guess received</div>;
     } else if(this.state.message === 'error') {
-      message = <div className="submit-message fail">There was a problem processing your entry</div>;
+      message = <div className="submit-message red">{this.state.messageText}</div>;
     }
 
-    let faceState = this.state.randomInt !== null;
-    let faceClass=`${faceState} ${this.state.randomInt}`;
+    let submitText = this.state.entered ? 'Entered' : 'Enter now';
+    let trumpAgain = this.state.entered ? <button className="btn btn-success" onClick={this.randomFunc} disabled={this.state.activeFace}>Trump Again?</button> : '';
+
+    let activeFace = this.state.activeFace ? 'active' : '';
+    let faceType = this.state.randomInt !== null ?  `type-${this.state.randomInt}` : '';
+    let faceClass=`${faceType} ${activeFace}`;
     return (
       <div className="container">
         <div id="header">
@@ -187,6 +203,7 @@ class Index extends React.Component {
         <div id="vote-box" className="row">
           <form action="/" onSubmit={this.formSubmit}>
             <div className="col-xs-12"><h3 className="white">Place Your Vote</h3></div>
+            <div className="col-xs-12" id="message">{message}</div>
             <div className="col-sm-6 col-xs-12">
               <label>Date</label>
               <input name="date" type="date" className="form-control" required value={this.state.date} onChange={this.handleChange}/>
@@ -204,14 +221,13 @@ class Index extends React.Component {
               <input name="email" type="email" className="form-control" required value={this.state.email} onChange={this.handleChange}/>
             </div>
             <div className="col-xs-12">
-              <input className="btn btn-primary" id="enter-button" value="Enter Now" type="submit"/>
+              <input className="btn btn-primary" id="enter-button" value={submitText} type="submit" disabled={this.state.entered}/>
+              {trumpAgain}
             </div>
           </form>
-          {message}
           <img src={this.props.hair_url} id="hair"/>
         </div>
         <div id="trump-face" className={faceClass}></div>
-        <button onClick={this.randomFunc} className="btn btn-primary">Trump Face {this.state.randomInt}</button>
       </div>
     );
   }

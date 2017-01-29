@@ -26,22 +26,19 @@ class EntrantsController < ApplicationController
   def create
     mod_params = entrant_params
     date = entrant_params[:date].to_datetime
-    date = date.change(hour: params[:time].split(':')[0].to_i, minute: params[:time].split(':')[1].to_i)
-    mod_params[:guess] = date
-    mod_params.delete('date')
-    mod_params.delete('time')
-    @entrant = Entrant.create(mod_params)
-
-    # respond_to do |format|
-    #   if @entrant.save
-    #     format.html { redirect_to @entrant, notice: 'Entrant was successfully created.' }
-    #     format.json { render :show, status: :created, location: @entrant }
-    #   else
-    #     format.html { render :new }
-    #     format.json { render json: @entrant.errors, status: :unprocessable_entity }
-    #   end
-    # end
-    render json: {entrant: @entrant}, status: 200
+    begin
+      raise "Date must be in the future" if date <= DateTime.now
+      raise "Date must be in this term" if date >= Date.new(2020, 11, 3)
+      date = date.change(hour: params[:time].split(':')[0].to_i, minute: params[:time].split(':')[1].to_i)
+      mod_params[:guess] = date
+      mod_params.delete('date')
+      mod_params.delete('time')
+      @entrant = Entrant.create(mod_params)
+    rescue => e
+      render json: {message: e.message}, status: 500
+    else
+      render json: {entrant: @entrant}, status: 200
+    end
   end
 
   # PATCH/PUT /entrants/1
