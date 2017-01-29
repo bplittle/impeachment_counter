@@ -43,7 +43,7 @@ body {
     #message {
       height: 40px;
       font-family: Tahoma, Verdana, Segoe, sans-serif;
-      
+
     }
 
     .fail {
@@ -89,7 +89,7 @@ body {
   height: 250px;
   width: 225px;
   // background-color: black;
-  background-image: url('face2.png');
+  background-image: url(asset-path('face2.png'));
   background-size: contain;
   background-repeat: no-repeat;
   position: fixed;

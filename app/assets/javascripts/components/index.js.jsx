@@ -2,7 +2,6 @@ class Index extends React.Component {
 
   constructor(props) {
     super(props);
-    console.log(props);
     let inaugDate = new Date('January 20, 2017');
     let date = new Date();
     let month = String(date.getMonth() + 1).length > 1 ? ((date.getMonth() + 1) % 12) : `0${((date.getMonth() + 1) % 12)}`;
@@ -95,7 +94,6 @@ class Index extends React.Component {
   randomFunc() {
     let that = this;
     let int = Math.floor(Math.random() * 4);
-    console.log(int);
     let audioUrl = that.props.audio_urls[Math.floor(Math.random()*that.props.audio_urls.length)]
     let audio = new Audio(audioUrl);
     setTimeout(function() {
@@ -131,13 +129,11 @@ class Index extends React.Component {
       data: dataHash,
       dataType: 'json',
       success: r => {
-        console.log(r);
         that.clearValues();
         that.message('success');
         that.randomFunc();
         that.setState({entered: true});
       }, error: r => {
-        console.log(r);
         let errorMessage = JSON.parse(r.responseText).message;
         that.message('error', errorMessage);
       }
